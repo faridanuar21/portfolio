@@ -6,10 +6,9 @@ use yii\db\Migration;
  * Handles the creation of table `{{%project_image}}`.
  * Has foreign keys to the tables:
  *
- * - `{{%project}}`
  * - `{{%file}}`
  */
-class m230420_062104_create_project_image_table extends Migration
+class m230420_072843_create_project_image_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -19,25 +18,9 @@ class m230420_062104_create_project_image_table extends Migration
         $this->createTable('{{%project_image}}', [
             'id' => $this->primaryKey(),
             'project_id' => $this->integer()->notNull(),
+            'foreignKey',
             'file_id' => $this->integer()->notNull(),
         ]);
-
-        // creates index for column `project_id`
-        $this->createIndex(
-            '{{%idx-project_image-project_id}}',
-            '{{%project_image}}',
-            'project_id'
-        );
-
-        // add foreign key for table `{{%project}}`
-        $this->addForeignKey(
-            '{{%fk-project_image-project_id}}',
-            '{{%project_image}}',
-            'project_id',
-            '{{%project}}',
-            'id',
-            'CASCADE'
-        );
 
         // creates index for column `file_id`
         $this->createIndex(
@@ -62,18 +45,6 @@ class m230420_062104_create_project_image_table extends Migration
      */
     public function safeDown()
     {
-        // drops foreign key for table `{{%project}}`
-        $this->dropForeignKey(
-            '{{%fk-project_image-project_id}}',
-            '{{%project_image}}'
-        );
-
-        // drops index for column `project_id`
-        $this->dropIndex(
-            '{{%idx-project_image-project_id}}',
-            '{{%project_image}}'
-        );
-
         // drops foreign key for table `{{%file}}`
         $this->dropForeignKey(
             '{{%fk-project_image-file_id}}',
